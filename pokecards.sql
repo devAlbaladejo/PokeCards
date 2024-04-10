@@ -34,6 +34,7 @@ INSERT INTO Types (name,color) VALUES ('ghost', '#705898');
 INSERT INTO Types (name,color) VALUES ('dragon', '#7038F8');
 INSERT INTO Types (name,color) VALUES ('dark', '#705848');
 INSERT INTO Types (name,color) VALUES ('steel', '#B8B8D0');
+INSERT INTO Types (name,color) VALUES ('fairy', '#F0B6BC');
 
 -- Rarity
 
