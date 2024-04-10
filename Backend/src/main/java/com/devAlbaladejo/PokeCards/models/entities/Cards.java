@@ -25,10 +25,10 @@ public class Cards implements java.io.Serializable {
 	private Rarities rarities;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "primary_type", nullable = false)
-	private Types typesByPrimaryType;
+	private Types primaryType;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "secondary_type")
-	private Types typesBySecondaryType;
+	private Types secondaryType;
 	@Column(name = "name", nullable = false)
 	private String name;
 	@Column(name = "image", nullable = false)
@@ -53,11 +53,11 @@ public class Cards implements java.io.Serializable {
 	@JsonIgnore
 	private Set<Usercards> usercardses = new HashSet<Usercards>(0);
 
-	public Cards(int id, Rarities rarities, Types typesByPrimaryType, String name, String image, int height, int weight,
+	public Cards(int id, Rarities rarities, Types primaryType, String name, String image, int height, int weight,
 			int hp, int attack, int defense, int specialAttack, int specialDefense, int speed) {
 		this.id = id;
 		this.rarities = rarities;
-		this.typesByPrimaryType = typesByPrimaryType;
+		this.primaryType = primaryType;
 		this.name = name;
 		this.image = image;
 		this.height = height;
