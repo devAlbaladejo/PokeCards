@@ -2,7 +2,11 @@ package com.devAlbaladejo.PokeCards.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -43,4 +47,27 @@ public class Utils {
 		
 		return json;
 	}
+	
+	public static String encriptPasswword(String password) 
+    {  
+        MessageDigest md;
+        
+        StringBuilder hexString = null;
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			 
+	        BigInteger number = new BigInteger(1, md.digest(password.getBytes(StandardCharsets.UTF_8)));  
+	  
+	        hexString = new StringBuilder(number.toString(16));  
+	  
+	        while (hexString.length() < 32)  
+	        {  
+	            hexString.insert(0, '0');  
+	        }  
+		} catch (NoSuchAlgorithmException e) {
+			hexString = null;
+		}  
+  
+        return hexString.toString();
+    }  
 }
