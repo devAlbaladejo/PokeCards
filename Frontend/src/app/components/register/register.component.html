@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form [formGroup]="formRegister">
+                <div *ngIf="formRegister.controls['username'].invalid &&
+                    (formRegister.controls['username'].dirty ||
+                    formRegister.controls['username'].touched)">
+                    <small class="text-danger">Username must be between 4 and 20 characters</small>
+                </div>
+            <input type="text" placeholder="Username" formControlName="username" required  minlength="4" maxlength="20">
+                <div *ngIf="formRegister.controls['email'].invalid &&
+                    (formRegister.controls['email'].dirty ||
+                    formRegister.controls['email'].touched)">
+                    <small class="text-danger">Email is required</small>
+                </div>
+            <input type="email" placeholder="Email" formControlName="email" required pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div *ngIf="formRegister.controls['password'].invalid &&
+                    (formRegister.controls['password'].dirty ||
+                    formRegister.controls['password'].touched)">
+                    <small class="text-danger">Password is required</small>
+                </div>
+            <input type="password" placeholder="Password" formControlName="password" required>
+                <div *ngIf="formRegister.controls['confirmPassword'].invalid &&
+                    (formRegister.controls['confirmPassword'].dirty ||
+                    formRegister.controls['confirmPassword'].touched)">
+                    <small class="text-danger">Confirm Password is required</small>
+                </div>
+            <input type="password" placeholder="Confirm Password" formControlName="confirmPassword" required>
+            <input type="submit" value="Register" [disabled]="!formRegister.valid" (click)="register()">
+        </form>
+        <div class="signin">
+            Already have an account? <a href="/login">Sign in</a>
+        </div>
+    </div>
+</body>
+</html>

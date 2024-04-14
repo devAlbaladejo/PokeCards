@@ -26,12 +26,4 @@ public class UsersServiceImpl implements IUsersService{
 	public void save(Users user) {
 		usersDAO.save(user);
 	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Users findById(Long id) {
-		return usersDAO.findById(id).orElse(null);
-	}
-
-	
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Home</title>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" src="home.component.css">
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm">
+                
+                <div class="profile">
+                    <div class="user">
+                        <div class="info-user">
+                            <p>{{user.username}}</p>
+                            <p>Points: {{user.points}}</p>
+                        </div>
+                        <div>
+                            <span><i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i></span>
+                        </div>
+                        <div>
+                            <span (click)="logout()"><i class="fa fa-sign-out logout-logo" aria-hidden="true"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+    </body>
+</html>

@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONObject;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class Utils {
 
@@ -50,24 +51,6 @@ public class Utils {
 	
 	public static String encriptPasswword(String password) 
     {  
-        MessageDigest md;
-        
-        StringBuilder hexString = null;
-		try {
-			md = MessageDigest.getInstance("SHA-256");
-			 
-	        BigInteger number = new BigInteger(1, md.digest(password.getBytes(StandardCharsets.UTF_8)));  
-	  
-	        hexString = new StringBuilder(number.toString(16));  
-	  
-	        while (hexString.length() < 32)  
-	        {  
-	            hexString.insert(0, '0');  
-	        }  
-		} catch (NoSuchAlgorithmException e) {
-			hexString = null;
-		}  
-  
-        return hexString.toString();
+        return new BCryptPasswordEncoder().encode(password);
     }  
 }

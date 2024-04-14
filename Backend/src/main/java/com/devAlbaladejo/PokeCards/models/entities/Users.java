@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = { "username", "email" }))
 public class Users implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

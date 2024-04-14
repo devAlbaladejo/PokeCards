@@ -1,0 +1,48 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  	font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background-color: #696969;
+}
+
+nav{
+    justify-content: space-between;
+    padding: 0px 20px;
+    background-color: gray;
+    color: white;
+    margin: 0px 0.5rem;
+    border-radius: 5px;
+}
+
+img{
+    width: 64px;
+    height: 64px;
+}
+
+.profile{
+    margin: 5px;
+}
+
+.profile:hover{
+    cursor: pointer;
+}
+
+.user{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-user > *{
+    margin: 0;
+    text-align: right;
+}
+
+.logout-logo{
+    color: red;
+}

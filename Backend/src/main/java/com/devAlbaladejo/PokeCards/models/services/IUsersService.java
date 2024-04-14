@@ -10,6 +10,4 @@ public interface IUsersService {
 	
 	public void save(Users user);
 	
-	public Users findById(Long id);
-	
 }

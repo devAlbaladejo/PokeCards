@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devAlbaladejo.PokeCards.models.dao.IUsersDAO;
 import com.devAlbaladejo.PokeCards.models.entities.Users;
 import com.devAlbaladejo.PokeCards.models.services.IUsersService;
 import com.devAlbaladejo.PokeCards.utils.Utils;
@@ -33,19 +35,22 @@ public class UsersRestController {
 	@Autowired
 	private IUsersService usersService;
 	
+	@Autowired
+	private IUsersDAO usersDAO;
+	
 	@GetMapping("/users")
 	public List<Users> getUsers(){
 		return usersService.findAll();
 	}
 	
-	@GetMapping("/users/{id}")
-	public ResponseEntity<?> getUser(@PathVariable Long id){
+	@GetMapping("/users/{username}")
+	public ResponseEntity<?> getUser(@PathVariable String username){
 		
 		Users user = null;
 		Map<String, Object> response = new HashMap<>();
 		
 		try {
-			user = usersService.findById(id);
+			user = usersDAO.findOneByUsername(username).orElse(null);
 		}catch(DataAccessException e) {
 			response.put("message", "Error when querying the database");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
@@ -53,7 +58,7 @@ public class UsersRestController {
 		}
 		
 		if(user == null) {
-			response.put("message", "User ID(".concat(id.toString().concat(") doesn't exist in the database!")));
+			response.put("message", "Username " + username + " not exists.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND); 
 		}
 		
@@ -81,6 +86,15 @@ public class UsersRestController {
 			user.setPoints(0);
 			
 			usersService.save(user);
+		}catch (DataIntegrityViolationException e) {
+			response.put("message", "Error creating user");
+			
+			if(e.getMessage().contains("uk_username"))
+				response.put("error", "Username already exists.");
+			else if(e.getMessage().contains("uk_email"))
+					response.put("error", "Email already exists.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CONFLICT);
 		}catch(DataAccessException e) {
 			response.put("message", "Error when querying the database");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

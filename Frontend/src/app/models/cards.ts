@@ -1,4 +1,4 @@
-import { Types } from "./Types";
+import { Types } from "./types";
 import { Rarities } from "./rarities";
 
 export class Cards{

@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://p4.wallpaperbetter.com/wallpaper/475/783/825/pokemon-charizard-blastoise-venusaur-wallpaper-preview.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+}
+.container h2 {
+    margin-bottom: 20px;
+}
+.container input[type="text"], .container input[type="password"], .container input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+.container input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.container input[type="submit"]:hover {
+    background-color: #45a049;
+}
+.container .signup {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.container .signup a {
+    color: #007bff;
+    text-decoration: none;
+}

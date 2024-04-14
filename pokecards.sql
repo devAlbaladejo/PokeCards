@@ -95,7 +95,9 @@ CREATE TABLE Users(
 	email character varying NOT NULL,
 	password character varying NOT NULL,
 	points integer NOT NULL,
-	CONSTRAINT pk_users PRIMARY KEY(id)
+	CONSTRAINT pk_users PRIMARY KEY(id),
+	CONSTRAINT uk_username UNIQUE (username),
+	CONSTRAINT uk_email UNIQUE (email)
 );
 
 -- User Cards
