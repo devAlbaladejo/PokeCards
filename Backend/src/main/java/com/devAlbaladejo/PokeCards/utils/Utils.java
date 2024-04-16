@@ -53,4 +53,11 @@ public class Utils {
     {  
         return new BCryptPasswordEncoder().encode(password);
     }  
+	
+	public static double convertIntToDouble(int number) {
+		String numeroFlotante = String.valueOf(number);
+		int longitud = numeroFlotante.length();
+		String resultado = numeroFlotante.substring(0, longitud - 1) + "." + numeroFlotante.substring(longitud - 1);
+		return Double.parseDouble(resultado);
+	}
 }

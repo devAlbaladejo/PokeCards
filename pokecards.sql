@@ -75,6 +75,8 @@ CREATE TABLE Cards(
 	special_defense integer NOT NULL,
 	speed integer NOT NULL,
 	rarity integer NOT NULL,
+	generation character varying NOT NULL,
+	description character varying NOT NULL,
 	CONSTRAINT pk_cards PRIMARY KEY(id),
 	CONSTRAINT fk_primary_type_types FOREIGN KEY (primary_type) REFERENCES Types(id),
 	CONSTRAINT fk_secondary_type_types FOREIGN KEY (secondary_type) REFERENCES Types(id),

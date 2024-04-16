@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon Detail</title>
+  </head>
+  <body [ngStyle]="{'background-color': (card.primaryType.color)}">
+    <header>
+        <div class="title">
+            <div class="title-container">
+                <a href="/pokedex" class="back">
+                    <img src="./../../../assets/imgs/back-to-home.svg" alt="back">
+                </a>
+                <div class="pokemon-name">
+                    <h1>{{card.name}}</h1>
+                </div>
+            </div>
+            <div class="pokemon-id">
+                <p *ngIf="card.id < 10">#00{{card.id}}</p>
+                <p *ngIf="card.id >= 10 && card.id < 100">#0{{card.id}}</p>
+                <p *ngIf="card.id >= 100">#{{card.id}}</p>
+            </div>
+        </div>
+    </header>
+    <section class="featured-img">
+        <div class="pokemon-img">
+            <img src="{{card.image}}" alt="{{card.name}}">
+        </div>
+    </section>
+    <section class="pokemon-info">
+        <div class="pokemon-types">
+            <p [ngStyle]="{'background-color': (card.primaryType.color)}">{{card.primaryType.name}}</p>
+            <p *ngIf="card.secondaryType != null" [ngStyle]="{'background-color': (card.secondaryType.color)}">{{card.secondaryType.name}}</p>
+        </div>
+        <p class="pokemon-caption">About</p>
+        <p class="pokemon-description">{{card.description}}</p>
+        <div class="pokemon-details">
+            <div class="detail-container">
+                <div class="detail">
+                    <img src="./../../../assets/imgs/weight.svg" alt="weight">
+                    <p>{{card.weight}} kg</p>
+                </div>
+                <p>Weight</p>
+            </div>
+            <div class="detail-container">
+                <div class="detail">
+                    <img src="./../../../assets/imgs/height.svg" alt="height">
+                    <p>{{card.height}} m</p>
+                </div>
+                <p>Height</p>
+            </div>
+            <div class="generation-container">
+                <div class="detail">
+                    <p class="generation {{card.generation}}"></p>
+                </div>
+                <p>Generation</p>
+            </div>
+        </div>
+        <p class="pokemon-caption">Base Stats</p>
+        <div class="pokemon-stats">
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">HP</p>
+                <p *ngIf="card.hp < 100">0{{card.hp}}</p>
+                <p *ngIf="card.hp >= 100">{{card.hp}}</p>
+                <progress class="stat-progress" value="{{card.hp}}" max="255"></progress>
+            </div>
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">ATK</p>
+                <p *ngIf="card.attack < 100">0{{card.attack}}</p>
+                <p *ngIf="card.attack >= 100">{{card.attack}}</p>
+                <progress class="stat-progress" value="{{card.attack}}" max="255"></progress>
+            </div>
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">DEF</p>
+                <p *ngIf="card.defense < 100">0{{card.defense}}</p>
+                <p *ngIf="card.defense >= 100">{{card.defense}}</p>
+                <progress class="stat-progress" value="{{card.defense}}" max="255"></progress>
+            </div>
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">SATK</p>
+                <p *ngIf="card.specialAttack < 100">0{{card.specialAttack}}</p>
+                <p *ngIf="card.specialAttack >= 100">{{card.specialAttack}}</p>
+                <progress class="stat-progress" value="{{card.specialAttack}}" max="255"></progress>
+            </div>
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">SDEF</p>
+                <p *ngIf="card.specialDefense < 100">0{{card.specialDefense}}</p>
+                <p *ngIf="card.specialDefense >= 100">{{card.specialDefense}}</p>
+                <progress class="stat-progress" value="{{card.specialDefense}}" max="255"></progress>
+            </div>
+            <div class="stat-container">
+                <p class="stat" [ngStyle]="{'color': (card.primaryType.color)}">SPD</p>
+                <p *ngIf="card.speed < 100">0{{card.speed}}</p>
+                <p *ngIf="card.speed >= 100">{{card.speed}}</p>
+                <progress class="stat-progress" value="{{card.speed}}" max="255"></progress>
+            </div>
+        </div>
+    </section>
+  </body>
+</html>

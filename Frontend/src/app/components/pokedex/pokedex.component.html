@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokedex</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <a href="/home"><img src="./../../../assets/imgs/back-to-home.svg" alt="back"></a>
+        <img src="./../../../assets/imgs/pokeball.svg" alt="pokeball" />
+        <h1>Pokedex</h1>
+      </div>
+      <div class="pokemon-counter">
+        <h1>{{userCards.length}}/{{cards.length}}</h1>
+      </div>
+    </header>
+    <main class="list-wrapper">
+        <div class="pokemon-list">
+          <div class="pokemon-card" *ngFor="let card of cards">
+            <div [ngStyle]="{'border': '5px solid ' + (card.rarities.color)}" class="pokemon-rarity " *ngIf="checkUserHasCard(card.id); else locked" (click)="showPokemonDetails(card.id)">
+              <div class="pokemon-info">
+                <p>{{card.name}}</p>
+                <p>#{{card.id}}</p>
+              </div>
+              <div class="pokemon-img">
+                <img src="{{card.image}}" alt="{{card.name}}">
+              </div>
+              <div class="pokemon-obtain">
+                <p>You got: {{amount}}</p>
+              </div>
+            </div>
+            <ng-template #locked>
+              <div class="locked">
+                <img src="./../../../assets/imgs/locked.svg" alt="locked">
+              </div>
+            </ng-template>
+          </div>
+        </div>
+    </main>
+  </body>
+</html>

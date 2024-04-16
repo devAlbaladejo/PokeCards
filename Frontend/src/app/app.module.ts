@@ -12,13 +12,17 @@ import { HomeComponent } from './components/home/home.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RegisterComponent } from './components/register/register.component';
+import { PokedexComponent } from './components/pokedex/pokedex.component';
+import { DetailsComponent } from './components/details/details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    PokedexComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

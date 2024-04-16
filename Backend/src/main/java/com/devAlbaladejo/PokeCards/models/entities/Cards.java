@@ -34,9 +34,9 @@ public class Cards implements java.io.Serializable {
 	@Column(name = "image", nullable = false)
 	private String image;
 	@Column(name = "height", nullable = false)
-	private int height;
+	private double height;
 	@Column(name = "weight", nullable = false)
-	private int weight;
+	private double weight;
 	@Column(name = "hp", nullable = false)
 	private int hp;
 	@Column(name = "attack", nullable = false)
@@ -49,12 +49,16 @@ public class Cards implements java.io.Serializable {
 	private int specialDefense;
 	@Column(name = "speed", nullable = false)
 	private int speed;
+	@Column(name = "generation", nullable = false)
+	private String generation;
+	@Column(name = "description", nullable = false)
+	private String description;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cards")
 	@JsonIgnore
 	private Set<Usercards> usercardses = new HashSet<Usercards>(0);
 
-	public Cards(int id, Rarities rarities, Types primaryType, String name, String image, int height, int weight,
-			int hp, int attack, int defense, int specialAttack, int specialDefense, int speed) {
+	public Cards(int id, Rarities rarities, Types primaryType, String name, String image, double height, double weight,
+			int hp, int attack, int defense, int specialAttack, int specialDefense, int speed, String generation, String description) {
 		this.id = id;
 		this.rarities = rarities;
 		this.primaryType = primaryType;
@@ -68,5 +72,7 @@ public class Cards implements java.io.Serializable {
 		this.specialAttack = specialAttack;
 		this.specialDefense = specialDefense;
 		this.speed = speed;
+		this.generation = generation;
+		this.description = description;
 	}
 }

@@ -76,6 +76,15 @@ public class CardsRestController {
 		List<Types> types = typesService.findAll();
 		List<Rarities> rarities = raritiesService.findAll();
 		Map<String, Object> response = new HashMap<>();
+		Map<Integer, String> generations = new HashMap<>();
+		generations.put(1, "first");
+		generations.put(2, "second");
+		generations.put(3, "third");
+		generations.put(4, "fourth");
+		generations.put(5, "fifth");
+		generations.put(6, "sixth");
+		generations.put(7, "seventh");
+		generations.put(8, "eighth");
 		
 		JSONObject jsonGeneration = Utils.readURL("https://pokeapi.co/api/v2/generation/" + generationID);
 		JSONArray arrayPokemons = jsonGeneration.getJSONArray("pokemon_species");
@@ -99,8 +108,8 @@ public class CardsRestController {
 				card.setSecondaryType(null);
 			}
 			
-			card.setHeight(jsonPokemon.getInt("height"));
-			card.setWeight(jsonPokemon.getInt("weight"));
+			card.setHeight(Utils.convertIntToDouble(jsonPokemon.getInt("height")));
+			card.setWeight(Utils.convertIntToDouble(jsonPokemon.getInt("weight")));
 			
 			JSONArray arrayStats = jsonPokemon.getJSONArray("stats");
 			card.setHp(arrayStats.getJSONObject(0).getInt("base_stat"));
@@ -112,10 +121,16 @@ public class CardsRestController {
 			
 			card.setRarities(rarities.get(0));
 			
+			JSONObject jsonDescription = Utils.readURL("https://pokeapi.co/api/v2/pokemon-species/" + arrayPokemons.getJSONObject(i).getString("name"));
+			JSONArray arrayDescription = jsonDescription.getJSONArray("flavor_text_entries");
+			card.setDescription(arrayDescription.getJSONObject(0).getString("flavor_text"));
+			
+			card.setGeneration(generations.get(generationID.intValue()));
+			
 			cardsService.save(card);
 		}
 		
-		response.put("message", "All pokemons from generation " + generationID + " have been inserted successfully");
+		response.put("message", "All pokemons from " + generations.get(generationID.intValue()) + " generation have been inserted successfully");
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK); 
 	}*/
 }

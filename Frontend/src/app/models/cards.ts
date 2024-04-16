@@ -5,15 +5,17 @@ export class Cards{
     id: number;
     name: string;
     image: string;
-    primary_type: Types;
-    secondary_type: Types;
+    primaryType: Types;
+    secondaryType: Types;
     height: number;
     weight: number;
     hp: number;
     attack: number;
     defense: number;
-    special_attack: number;
-    special_defense: number;
+    specialAttack: number;
+    specialDefense: number;
     speed: number;
     rarities: Rarities;
+    generation: string;
+    description: string;
 }
