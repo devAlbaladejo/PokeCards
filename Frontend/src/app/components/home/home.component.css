@@ -1,6 +1,4 @@
 *{
-	margin: 0;
-	padding: 0;
 	box-sizing: border-box;
   	font-family: 'Arial', sans-serif;
 }
@@ -11,11 +9,16 @@ body{
 
 nav{
     justify-content: space-between;
-    padding: 0px 20px;
+    padding: 10px 20px;
     background-color: gray;
     color: white;
     margin: 0px 0.5rem;
     border-radius: 5px;
+}
+
+.nav-item p{
+    text-align: center;
+    padding-top: 3px;
 }
 
 img{
@@ -45,4 +48,95 @@ img{
 
 .logout-logo{
     color: red;
+}
+
+.container-fluid{
+    padding: 20px;
+    height: calc(100% - 9rem);
+}
+
+.gift-container{
+    background-color: white;
+    padding: 10px;
+    height: 20vh;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gift-title{
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+}
+
+.bronze{
+    background-color: #CD7F32;
+}
+
+.silver{
+    background-color: #C0C0C0;
+}
+
+.gold{
+    background-color: #FFD700;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+}
+
+.item p:first-child{
+    margin-right: 5px;
+}
+
+.item .random-rarity,
+.item .random-primary-type,
+.item .random-secondary-type,
+.item .random-id,
+.modal-header h5{
+    color: transparent;
+    text-transform: capitalize;
+}
+
+.item .random-rarity{
+    animation: hiddenToShowWord 3s linear forwards;
+}
+
+.item .random-primary-type{
+    animation: hiddenToShowWord 3s 3s linear forwards;
+}
+
+.item .random-secondary-type{
+    animation: hiddenToShowWord 3s 6s linear forwards;
+}
+
+.item .random-id{
+    animation: hiddenToShowWord 3s 9s linear forwards;
+}
+
+.modal-header h5{
+    animation: hiddenToShowWord 3s 12s linear forwards;
+}
+
+.modal-header img{
+    opacity: 0;
+    animation: hiddenToShowImage 3s 12s linear forwards;
+}
+
+.btn-secondary{
+    width: 100%;
+}
+
+@keyframes hiddenToShowWord {
+    0%{ color: transparent; }
+    100% { color: black; }
+}
+
+@keyframes hiddenToShowImage{
+    from{ opacity: 0; }
+    to { opacity: 1; }
 }

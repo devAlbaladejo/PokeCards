@@ -13,4 +13,8 @@ export class UsercardsService {
   getUserCards(id: number) : Observable<UserCards[]>{
     return this.http.get<UserCards[]>('http://localhost:8080/api/userCards/' + id).pipe(map(res => res));
   }
+
+  postRandomCard(giftID: number, userCard: any) : Observable<UserCards>{
+    return this.http.post<UserCards>('http://localhost:8080/api/userCards/save/' + giftID, userCard).pipe(map(res => res));
+  }
 }

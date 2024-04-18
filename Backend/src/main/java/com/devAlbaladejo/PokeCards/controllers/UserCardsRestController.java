@@ -1,5 +1,6 @@
 package com.devAlbaladejo.PokeCards.controllers;
 
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,8 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devAlbaladejo.PokeCards.models.entities.Cards;
 import com.devAlbaladejo.PokeCards.models.entities.Usercards;
+import com.devAlbaladejo.PokeCards.models.entities.Users;
+import com.devAlbaladejo.PokeCards.models.services.ICardsService;
 import com.devAlbaladejo.PokeCards.models.services.IUserCardsService;
+import com.devAlbaladejo.PokeCards.models.services.IUsersService;
+import com.devAlbaladejo.PokeCards.utils.Utils;
 
 import jakarta.validation.Valid;
 
@@ -33,6 +39,12 @@ public class UserCardsRestController {
 	@Autowired
 	private IUserCardsService userCardsService;
 	
+	@Autowired
+	private IUsersService usersService;
+	
+	@Autowired
+	private ICardsService cardsService;
+	
 	@GetMapping("/userCards/{id}")
 	public List<Usercards> getUserCards(@PathVariable Long id){
 		List<Usercards> allUserCards = userCardsService.findAll();
@@ -42,13 +54,15 @@ public class UserCardsRestController {
 		return userCards;
 	}
 	
-	@PostMapping("/userCards/save")
+	@PostMapping("/userCards/save/{giftID}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> createUserCard(@Valid @RequestBody Usercards userCard, BindingResult result) {
+	public ResponseEntity<?> createUserCard(@PathVariable Long giftID, @Valid @RequestBody Users user, BindingResult result) {
 
-		Usercards usercards = userCardsService.findByUserIdAndCardId(userCard.getUsers().getId(), userCard.getCards().getId());
-		
 		Map<String, Object> response = new HashMap<>();
+		Map<Integer, Integer[]> probabilities = new HashMap<>();
+		probabilities.put(1, new Integer[] {44,74,92,99,100});
+		probabilities.put(2, new Integer[] {30,62,85,97,100});
+		probabilities.put(3, new Integer[] {17,55,80,95,100});
 		
 		if(result.hasErrors()) {
 			List<String> errors = result.getFieldErrors()
@@ -61,17 +75,43 @@ public class UserCardsRestController {
 		}
 		
 		try {		
-			
-			if(usercards == null) {
-				usercards = new Usercards();
-				usercards.setUsers(userCard.getUsers());
-				usercards.setCards(userCard.getCards());
-				usercards.setAmount(1);
-			}
-			else
-				usercards.setAmount(usercards.getAmount() + 1);
+			List<Cards> cards =  cardsService.findAll();
+			if(Utils.userHasPoints(user,giftID.intValue())) {
+				Cards card = Utils.getRandomCard(probabilities.get(giftID.intValue()), cards);
+				Usercards usercards = userCardsService.findByUserIdAndCardId(user.getId(), card.getId());
 				
-			userCardsService.save(usercards);
+				if(usercards == null) {
+					usercards = new Usercards();
+					usercards.setUsers(user);
+					usercards.setCards(card);
+					usercards.setAmount(1);
+				}
+				else
+					usercards.setAmount(usercards.getAmount() + 1);
+					
+				userCardsService.save(usercards);
+				
+				int points = 0;
+				
+				if(giftID == 1)
+					points = 100;
+				else if(giftID == 2)
+					points = 200;
+				else if(giftID == 3)
+					points = 300;
+				
+				user.setPoints((user.getPoints()) - points);
+				
+				usersService.save(user);
+				response.put("users", usercards.getUsers());
+				response.put("cards", usercards.getCards());
+				response.put("amount", usercards.getAmount());
+			}
+			else {
+				response.put("message", "Error opening gift");
+				response.put("error", "Insufficent points");
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}
 		}catch(DataAccessException e) {
 			response.put("message", "Error when querying the database");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));

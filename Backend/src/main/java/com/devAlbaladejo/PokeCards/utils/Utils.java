@@ -2,16 +2,17 @@ package com.devAlbaladejo.PokeCards.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.math.BigInteger;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONObject;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.devAlbaladejo.PokeCards.models.entities.Cards;
+import com.devAlbaladejo.PokeCards.models.entities.Users;
 
 public class Utils {
 
@@ -59,5 +60,58 @@ public class Utils {
 		int longitud = numeroFlotante.length();
 		String resultado = numeroFlotante.substring(0, longitud - 1) + "." + numeroFlotante.substring(longitud - 1);
 		return Double.parseDouble(resultado);
+	}
+	
+	public static boolean userHasPoints(Users user, int giftID) {
+		
+		switch (giftID) {
+			case 1: {
+				if(user.getPoints() < 100)
+					return false;
+				
+				break;
+			}
+			case 2: {
+				if(user.getPoints() < 200)
+					return false;
+				
+				break;
+			}
+			case 3: {
+				if(user.getPoints() < 300)
+					return false;
+				
+				break;
+			}
+		}
+		
+		return true;
+	}
+	
+	public static Cards getRandomCard(Integer[] probabilities, List<Cards> cards) {
+		int random = randomNumber(100);
+		List<Cards> filteredCards = null;
+		int cardID;
+		
+		if(random <= probabilities[0]) {
+			filteredCards = cards.stream().filter(e -> e.getRarities().getId() == 1).toList();
+		}else if((random > probabilities[0]) && (random <= probabilities[1])) {
+			filteredCards = cards.stream().filter(e -> e.getRarities().getId() == 2).toList();
+		}else if((random > probabilities[1]) && (random <= probabilities[2])) {
+			filteredCards = cards.stream().filter(e -> e.getRarities().getId() == 3).toList();
+		}else if((random > probabilities[2]) && (random <= probabilities[3])) {
+			filteredCards = cards.stream().filter(e -> e.getRarities().getId() == 4).toList();
+		}else if((random > probabilities[3]) && (random <= probabilities[4])) {
+			filteredCards = cards.stream().filter(e -> e.getRarities().getId() == 5).toList();
+		}
+		
+		cardID = randomNumber(filteredCards.size() - 1);
+		
+		return filteredCards.get(cardID);
+	}
+	
+	private static int randomNumber(int max) {
+		Random rand = new Random();
+		return rand.nextInt(max - 1 + 1) + 1;
 	}
 }
