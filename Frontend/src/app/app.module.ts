@@ -14,6 +14,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RegisterComponent } from './components/register/register.component';
 import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { DetailsComponent } from './components/details/details.component';
+import { CombatComponent } from './components/combat/combat.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { DetailsComponent } from './components/details/details.component';
     HomeComponent,
     RegisterComponent,
     PokedexComponent,
-    DetailsComponent
+    DetailsComponent,
+    CombatComponent
   ],
   imports: [
     BrowserModule,

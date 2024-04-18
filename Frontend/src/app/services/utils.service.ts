@@ -24,7 +24,7 @@ export class UtilsService {
     this.snackBar.open(message, type, {
       horizontalPosition: 'center',
       verticalPosition: 'bottom',
-      duration:5000
+      duration:3000
     });
   }
 }

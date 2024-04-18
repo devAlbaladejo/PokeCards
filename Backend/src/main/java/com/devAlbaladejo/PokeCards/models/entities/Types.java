@@ -28,6 +28,8 @@ public class Types implements java.io.Serializable {
 	private String name;
 	@Column(name = "color", nullable = false)
 	private String color;
+	@Column(name = "strong")
+	private String strong;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "primaryType")
 	@JsonIgnore
 	private Set<Cards> cardsesForPrimaryType = new HashSet<Cards>(0);

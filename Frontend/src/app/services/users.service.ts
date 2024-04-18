@@ -17,4 +17,8 @@ export class UsersService {
   createUser(response: any) : Observable<any>{
     return this.http.post<any>("http://localhost:8080/api/users/save", response).pipe(map(res => res));
   }
+
+  updateUser(response: any) : Observable<any>{
+    return this.http.put<any>("http://localhost:8080/api/users/update", response).pipe(map(res => res));
+  }
 }

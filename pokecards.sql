@@ -14,27 +14,28 @@ CREATE TABLE Types(
 	id integer DEFAULT nextval('seq_types'::regclass) NOT NULL,
 	name character varying NOT NULL,
 	color character varying NOT NULL,
+	strong character varying NOT NULL,
 	CONSTRAINT pk_types PRIMARY KEY(id)
 );
 
 INSERT INTO Types (name,color) VALUES ('normal', '#A8A878');
-INSERT INTO Types (name,color) VALUES ('fire', '#F08030');
-INSERT INTO Types (name,color) VALUES ('water', '#6890F0');
-INSERT INTO Types (name,color) VALUES ('electric', '#F8D030');
-INSERT INTO Types (name,color) VALUES ('grass', '#78C850');
-INSERT INTO Types (name,color) VALUES ('ice', '#98D8D8');
-INSERT INTO Types (name,color) VALUES ('fighting', '#C03028');
-INSERT INTO Types (name,color) VALUES ('poison', '#A040A0');
-INSERT INTO Types (name,color) VALUES ('ground', '#E0C068');
-INSERT INTO Types (name,color) VALUES ('flying', '#A890F0');
-INSERT INTO Types (name,color) VALUES ('psychic', '#F85888');
-INSERT INTO Types (name,color) VALUES ('bug', '#A8B820');
-INSERT INTO Types (name,color) VALUES ('rock', '#B8A038');
-INSERT INTO Types (name,color) VALUES ('ghost', '#705898');
-INSERT INTO Types (name,color) VALUES ('dragon', '#7038F8');
-INSERT INTO Types (name,color) VALUES ('dark', '#705848');
-INSERT INTO Types (name,color) VALUES ('steel', '#B8B8D0');
-INSERT INTO Types (name,color) VALUES ('fairy', '#F0B6BC');
+INSERT INTO Types (name,color,strong) VALUES ('fire', '#F08030','17;12;6;5');
+INSERT INTO Types (name,color,strong) VALUES ('water', '#6890F0','2;13;9');
+INSERT INTO Types (name,color,strong) VALUES ('electric', '#F8D030','3;10');
+INSERT INTO Types (name,color,strong) VALUES ('grass', '#78C850','3;13;9');
+INSERT INTO Types (name,color,strong) VALUES ('ice', '#98D8D8','15;5;9;10');
+INSERT INTO Types (name,color,strong) VALUES ('fighting', '#C03028','1');
+INSERT INTO Types (name,color,strong) VALUES ('poison', '#A040A0','18;5');
+INSERT INTO Types (name,color,strong) VALUES ('ground', '#E0C068','17;4;2;13;8');
+INSERT INTO Types (name,color,strong) VALUES ('flying', '#A890F0','12;7;5');
+INSERT INTO Types (name,color,strong) VALUES ('psychic', '#F85888','7;8');
+INSERT INTO Types (name,color,strong) VALUES ('bug', '#A8B820','5;11;16');
+INSERT INTO Types (name,color,strong) VALUES ('rock', '#B8A038','12;2;6;10');
+INSERT INTO Types (name,color,strong) VALUES ('ghost', '#705898','14;10');
+INSERT INTO Types (name,color,strong) VALUES ('dragon', '#7038F8','15');
+INSERT INTO Types (name,color,strong) VALUES ('dark', '#705848','14;11');
+INSERT INTO Types (name,color,strong) VALUES ('steel', '#B8B8D0','18;6;13');
+INSERT INTO Types (name,color,strong) VALUES ('fairy', '#F0B6BC','15;7;16');
 
 -- Rarity
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Combat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <header>
+            <div class="container-fluid header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="score-container">
+                            <h1>YOU</h1>
+                            <h1 class="score user-score">{{userPoints}}</h1>
+                            <h1 class="score cpu-score">{{cpuPoints}}</h1>
+                            <h1>CPU</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="game-container">
+                <div>
+                    <h2>YOU</h2>
+                </div>
+                <div id="user-card">
+                </div>
+                <div id="cpu-card">
+                </div>
+                <div>
+                    <h2>CPU</h2>
+                </div>
+            </section>
+        </main>
+
+        <div id="info-screen" class="info">
+            <h1>Info:</h1>
+            <h2 class="text-center">The game is like rock, paper, scissors, but with the type table.</h2>
+            <h3>The first one to get 3 points wins</h3>
+            <div class="options">
+                <button type="button" class="btn btn-primary" (click)="home()">Back Home</button>
+                <button type="button" class="btn btn-success" (click)="play()">Play</button>
+            </div>
+        </div>
+
+        <div id="end-screen" class="end-game">
+            <h1>What do you want yo do?</h1>
+            <div class="options">
+                <button type="button" class="btn btn-primary" (click)="home()">Back Home</button>
+                <button type="button" class="btn btn-success" (click)="play()">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="typesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Choose one type:</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="card-container">
+                        <div *ngFor="let type of types">
+                            <div [ngStyle]="{'background-color': (type.color)}" class="card" data-bs-dismiss="modal" (click)="userSelectedType(type)">
+                                <p>{{type.name}}</p>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </body>
+</html>
