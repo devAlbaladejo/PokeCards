@@ -113,3 +113,49 @@ CREATE TABLE UserCards(
 	CONSTRAINT fk_usercards_users FOREIGN KEY(user_id) REFERENCES Users(id),
 	CONSTRAINT fk_usercards_cards FOREIGN KEY(card_id) REFERENCES Cards(id)
 )
+
+-- Exchange Offers
+CREATE SEQUENCE public.seq_exchange_offers
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    CYCLE;
+
+CREATE TABLE Exchange_offers(
+	id integer DEFAULT nextval('seq_exchange_offers'::regclass) NOT NULL,
+	user_id_offer integer not null,
+	card_id_offer integer not null,
+	desired_card_1 integer not null,
+	desired_card_2 integer,
+	desired_card_3 integer,
+	active integer NOT NULL DEFAULT 1,
+	CONSTRAINT pk_exchange_offers PRIMARY KEY(id),
+	CONSTRAINT fk_exchange_offers_users FOREIGN KEY (user_id_offer) REFERENCES Users(id),
+	CONSTRAINT fk_exchange_offers_cards FOREIGN KEY (card_id_offer) REFERENCES Cards(id),
+	CONSTRAINT fk_exchange_offers_desired_card_1 FOREIGN KEY (desired_card_1) REFERENCES Cards(id),
+	CONSTRAINT fk_exchange_offers_desired_card_2 FOREIGN KEY (desired_card_2) REFERENCES Cards(id),
+	CONSTRAINT fk_exchange_offers_desired_card_3 FOREIGN KEY (desired_card_3) REFERENCES Cards(id)
+);
+
+-- Exchanges
+CREATE SEQUENCE public.seq_exchanges
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+    CYCLE;
+
+CREATE TABLE Exchanges (
+    id integer DEFAULT nextval('public.seq_exchanges'::regclass) NOT NULL,
+	exchange_offer_id integer NOT NULL,
+    user_id_demand integer NOT NULL,
+    card_id_demand integer NOT NULL,
+	CONSTRAINT pk_exchange PRIMARY KEY(id),
+	CONSTRAINT fk_exchange_offer FOREIGN KEY (exchange_offer_id) REFERENCES exchange_offers(id),
+    FOREIGN KEY (user_id_demand) REFERENCES Users(id),
+    FOREIGN KEY (card_id_demand) REFERENCES Cards(id)
+);
+	

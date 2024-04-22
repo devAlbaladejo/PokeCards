@@ -15,6 +15,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { DetailsComponent } from './components/details/details.component';
 import { CombatComponent } from './components/combat/combat.component';
+import { ExchangeComponent } from './components/exchange/exchange.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CombatComponent } from './components/combat/combat.component';
     RegisterComponent,
     PokedexComponent,
     DetailsComponent,
-    CombatComponent
+    CombatComponent,
+    ExchangeComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { CombatComponent } from './components/combat/combat.component';
     FormsModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   providers: [
     {

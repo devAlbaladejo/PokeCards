@@ -3,6 +3,7 @@ package com.devAlbaladejo.PokeCards.models.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +19,7 @@ public class UserCardsServiceImpl implements IUserCardsService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Usercards> findAll() {
-		return userCardsDAO.findAll();
+		return userCardsDAO.findAll(Sort.by(Sort.Direction.ASC,"cards"));
 	}
 
 	@Override

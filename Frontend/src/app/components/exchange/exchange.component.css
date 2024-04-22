@@ -1,0 +1,145 @@
+*{
+  margin: 0;
+  padding: 0;
+	box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+button{
+  padding: 10px;
+}
+
+.exchange-container{
+    display: flex;
+    flex-direction: column;
+    background-color: lightcoral;
+    border-radius: 5px;
+    margin: 10px 0px;
+    padding: 10px;
+}
+
+.header-exchange-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.exchange{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px
+}
+
+.exchange img{
+  width: 72px;
+  height: 72px;
+}
+
+.pokemon-card {
+    border-radius: 8px;
+    box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    width: 8.85rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.pokemon-card .pokemon-rarity{
+    border-radius: 5px;
+}
+
+.pokemon-card .pokemon-info{
+  min-height: 16px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 8px 8px;
+  color: #666666;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+.pokemon-card .pokemon-info p:first-child{
+  text-transform: capitalize;
+}
+
+.pokemon-card .pokemon-img {
+  width: 72px;
+  height: 72px;
+  margin: auto;
+}
+
+.pokemon-card .pokemon-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.desired-container {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.pokemon-card .pokemon-obtain{
+  border-radius: 7px;
+  background-color: #efefef;
+  padding: 40px 8px 4px 8px;
+  color: #212121;
+  margin-top: -27px;
+}
+
+.pokemon-remove{
+  display: none;
+}
+
+.pokemon-card .pokemon-obtain p{
+  font-size: 10px;
+}
+
+:not(.pokemon-list) .pokemon-card.disabled {
+  opacity: 0.5;
+}
+
+.modal-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  max-width: none;
+}
+
+.modal-fullscreen .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.pokemon-list {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.pokemon-list .pokemon-card{
+  cursor: pointer;
+}
+
+.selected, .selected .pokemon-obtain{
+  background-color: #ADD8E6;
+}
+
+.selected .pokemon-remove{
+  display: block;
+}
+
+.selected .pokemon-remove button{
+  width: 100%;
+}

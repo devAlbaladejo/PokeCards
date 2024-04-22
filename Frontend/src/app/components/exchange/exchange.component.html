@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Exchanges</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+      <main>
+        <mat-tab-group>
+          <!-- Exchange Offers -->
+          <mat-tab label="Exchange Offers">
+            <div class="col-md-12 p-2">
+              <button type="button" class="btn btn-success" (click)="newExchangeOffer()" [disabled]="userCards.length == 0">New Exchange offer</button>
+              <div class="exchange-container" *ngFor="let exchangeOffer of exchangeOffers">
+                <div class="header-exchange-container">
+                  <h5>{{exchangeOffer.userOffer.username}}</h5>
+                  <button *ngIf="exchangeOffer.userOffer.id == user.id" type="button" class="btn btn-danger" (click)="removeExchangeOffer(exchangeOffer)">Remove</button>
+                  <button *ngIf="exchangeOffer.userOffer.id != user.id" type="button" class="btn btn-success" (click)="getDataExchange(exchangeOffer)" [disabled]="!checkUserHasDemandCards(exchangeOffer)">Change</button>
+                </div>
+                <div class="exchange">
+                  <div class="pokemon-card " [ngClass]="checkAmount(exchangeOffer.cardOffer.id)">
+                    <div [ngStyle]="{'border': '5px solid ' + (exchangeOffer.cardOffer.rarities.color)}" class="pokemon-rarity">
+                      <div class="pokemon-info">
+                        <p>{{exchangeOffer.cardOffer.name}}</p>
+                        <p>#{{exchangeOffer.cardOffer.id}}</p>
+                      </div>
+                      <div class="pokemon-img">
+                        <img src="{{exchangeOffer.cardOffer.image}}" alt="{{exchangeOffer.cardOffer.name}}">
+                      </div>
+                      <div class="pokemon-obtain">
+                        <p>You got: {{amount}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <img src="./../../../assets/imgs/exchange-arrows.svg" alt="Exchange">
+                  <div class="desired-container">
+                    <div class="pokemon-card " [ngClass]="checkAmount(exchangeOffer.desiredCard1.id)">
+                      <!-- Desired Card 1-->
+                      <div [ngStyle]="{'border': '5px solid ' + (exchangeOffer.desiredCard1.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchangeOffer.desiredCard1.name}}</p>
+                          <p>#{{exchangeOffer.desiredCard1.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchangeOffer.desiredCard1.image}}" alt="{{exchangeOffer.desiredCard1.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="exchangeOffer.desiredCard2 != null" class="pokemon-card " [ngClass]="checkAmount(exchangeOffer.desiredCard2.id)">
+                      <!-- Desired Card 2-->
+                      <div [ngStyle]="{'border': '5px solid ' + (exchangeOffer.desiredCard2.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchangeOffer.desiredCard2.name}}</p>
+                          <p>#{{exchangeOffer.desiredCard2.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchangeOffer.desiredCard2.image}}" alt="{{exchangeOffer.desiredCard2.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="exchangeOffer.desiredCard3 != null" class="pokemon-card " [ngClass]="checkAmount(exchangeOffer.desiredCard3.id)">
+                      <!-- Desired Card 3-->
+                      <div [ngStyle]="{'border': '5px solid ' + (exchangeOffer.desiredCard3.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchangeOffer.desiredCard3.name}}</p>
+                          <p>#{{exchangeOffer.desiredCard3.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchangeOffer.desiredCard3.image}}" alt="{{exchangeOffer.desiredCard3.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <!-- My Exchanges -->
+          <mat-tab label="My Exchanges">
+            <div class="col-md-12 p-2">
+              <div class="exchange-container" *ngFor="let exchange of exchanges">
+                <div class="exchange">
+                  <div>
+                    <h5>{{exchange.exchangeOffer.userOffer.username}}</h5>
+                  </div>
+                  <div class="pokemon-card " [ngClass]="checkAmount(exchange.exchangeOffer.cardOffer.id)">
+                    <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.cardOffer.rarities.color)}" class="pokemon-rarity">
+                      <div class="pokemon-info">
+                        <p>{{exchange.exchangeOffer.cardOffer.name}}</p>
+                        <p>#{{exchange.exchangeOffer.cardOffer.id}}</p>
+                      </div>
+                      <div class="pokemon-img">
+                        <img src="{{exchange.exchangeOffer.cardOffer.image}}" alt="{{exchange.exchangeOffer.cardOffer.name}}">
+                      </div>
+                      <div class="pokemon-obtain">
+                        <p>You got: {{amount}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <img src="./../../../assets/imgs/exchange-arrows.svg" alt="Exchange">
+                  <div class="exchange">
+                    <div class="pokemon-card " [ngClass]="checkAmount(exchange.cardDemand.id)">
+                      <!-- Desired Card 1-->
+                      <div [ngStyle]="{'border': '5px solid ' + (exchange.cardDemand.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchange.cardDemand.name}}</p>
+                          <p>#{{exchange.cardDemand.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchange.cardDemand.image}}" alt="{{exchange.cardDemand.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h5>{{exchange.userDemand.username}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </main>
+        <!-- New Exchange Offer Modal -->
+        <div class="modal fade" id="exchangeOfferModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">New Exchange Offer</h1>
+                </div>
+                <div class="modal-body">
+                  <h3>My Pokemon Offer</h3>
+                  <div id="offer-list" class="pokemon-list">
+                    <div class="pokemon-card" *ngFor="let userCard of userCards" [ngClass]="checkAmount(userCard.cards.id)" (click)="addCardOffer($event, userCard.cards)">
+                      <div [ngStyle]="{'border': '5px solid ' + (userCard.cards.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{userCard.cards.name}}</p>
+                          <p>#{{userCard.cards.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{userCard.cards.image}}" alt="{{userCard.cards.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                        <div class="pokemon-remove">
+                          <button class="btn btn-danger btn-sm" (click)="removeCardOffer()">X</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h3>Pokemons that I'd desire</h3>
+                  <div id="desire-list" class="pokemon-list">
+                    <div class="pokemon-card" *ngFor="let card of cards" [ngClass]="checkAmount(card.id)" (click)="addCardsDesire($event, card)">
+                      <div [ngStyle]="{'border': '5px solid ' + (card.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{card.name}}</p>
+                          <p>#{{card.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{card.image}}" alt="{{card.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                        <div class="pokemon-remove">
+                          <button class="btn btn-danger btn-sm" (click)="removeCardDesire(card.id)">X</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- Form Buttons -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-sm" [disabled]="!cardOffer || cardsDesire.length === 0" data-bs-dismiss="modal" (click)="addExchangeOffer()">Create</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exchange Modal -->
+        <div class="modal fade" id="exchangeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5">Exchange</h1>
+                </div>
+                <div *ngIf="exchange.exchangeOffer != null" class="modal-body">
+                  <h3>Pokemon Offer</h3>
+                  <div class="pokemon-list">
+                    <div class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.cardOffer.id)">
+                      <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.cardOffer.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchange.exchangeOffer.cardOffer.name}}</p>
+                          <p>#{{exchange.exchangeOffer.cardOffer.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchange.exchangeOffer.cardOffer.image}}" alt="{{exchange.exchangeOffer.cardOffer.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h3>Pokemon Demand</h3>
+                  <div id="demand-list" class="pokemon-list">
+                    <!-- Desire Card 1 -->
+                    <div class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard1.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard1)">
+                      <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard1.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchange.exchangeOffer.desiredCard1.name}}</p>
+                          <p>#{{exchange.exchangeOffer.desiredCard1.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchange.exchangeOffer.desiredCard1.image}}" alt="{{exchange.exchangeOffer.desiredCard1.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                        <div *ngIf="amount > 0" class="pokemon-remove">
+                          <button class="btn btn-danger btn-sm" (click)="removeCardDemand()">X</button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Desire Card 2 -->
+                    <div *ngIf="exchange.exchangeOffer.desiredCard2 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard2.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard2)">
+                      <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard2.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchange.exchangeOffer.desiredCard2.name}}</p>
+                          <p>#{{exchange.exchangeOffer.desiredCard2.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchange.exchangeOffer.desiredCard2.image}}" alt="{{exchange.exchangeOffer.desiredCard2.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                        <div *ngIf="amount > 0" class="pokemon-remove">
+                          <button class="btn btn-danger btn-sm" (click)="removeCardDemand()">X</button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Desire Card 3 -->
+                    <div *ngIf="exchange.exchangeOffer.desiredCard3 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard3.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard3)">
+                      <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard3.rarities.color)}" class="pokemon-rarity">
+                        <div class="pokemon-info">
+                          <p>{{exchange.exchangeOffer.desiredCard3.name}}</p>
+                          <p>#{{exchange.exchangeOffer.desiredCard3.id}}</p>
+                        </div>
+                        <div class="pokemon-img">
+                          <img src="{{exchange.exchangeOffer.desiredCard3.image}}" alt="{{exchange.exchangeOffer.desiredCard3.name}}">
+                        </div>
+                        <div class="pokemon-obtain">
+                          <p>You got: {{amount}}</p>
+                        </div>
+                        <div *ngIf="amount > 0" class="pokemon-remove">
+                          <button class="btn btn-danger btn-sm" (click)="removeCardDemand()">X</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <!-- Form Buttons -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal" [disabled]="!cardDemand" (click)="change()">Change</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </body>
+</html>

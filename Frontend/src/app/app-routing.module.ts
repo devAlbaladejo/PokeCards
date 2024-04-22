@@ -7,6 +7,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { PokedexComponent } from './components/pokedex/pokedex.component';
 import { DetailsComponent } from './components/details/details.component';
 import { CombatComponent } from './components/combat/combat.component';
+import { ExchangeComponent } from './components/exchange/exchange.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent, canActivate: [authGuard]},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'pokedex', component: PokedexComponent, canActivate: [authGuard]},
   {path: 'details/:id', component: DetailsComponent, canActivate: [authGuard]},
-  {path: 'combat', component: CombatComponent, canActivate: [authGuard]}
+  {path: 'combat', component: CombatComponent, canActivate: [authGuard]},
+  {path: 'exchange', component: ExchangeComponent, canActivate: [authGuard]}
 ];
 
 @NgModule({
