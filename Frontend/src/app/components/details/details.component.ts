@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -26,9 +27,12 @@ export class DetailsComponent implements OnInit {
     private cardsService: CardsService,
     private userCardsService: UsercardsService,
     private utilsService: UtilsService,
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Pokemon Details');
+    
     this.route.params.pipe(
       switchMap(params => {
         const cardId = +params['id'];

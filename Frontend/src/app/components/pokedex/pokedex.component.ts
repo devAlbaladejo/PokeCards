@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Cards } from 'src/app/models/cards';
 import { UserCards } from 'src/app/models/user-cards';
@@ -20,10 +21,11 @@ export class PokedexComponent implements OnInit{
   amount = 0;
 
   constructor(private cardsService: CardsService, private userCardsService: UsercardsService,
-    private utilsService: UtilsService, private router: Router
+    private utilsService: UtilsService, private router: Router, private titleService: Title
   ){}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Pokedex');
     this.listAllCards();
     this.getUserCards();
   }

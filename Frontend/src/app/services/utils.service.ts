@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 import { Users } from '../models/users';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as bootstrap from 'bootstrap';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,13 @@ export class UtilsService {
       verticalPosition: 'bottom',
       duration:3000
     });
+  }
+
+  openModal(modalID: string){
+    var modal = document.getElementById(modalID);
+
+    var modalInstance = new bootstrap.Modal(modal);
+
+    modalInstance.show();
   }
 }

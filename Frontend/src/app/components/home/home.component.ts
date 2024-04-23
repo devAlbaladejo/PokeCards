@@ -8,6 +8,7 @@ import { UsercardsService } from 'src/app/services/usercards.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import * as bootstrap from 'bootstrap';
 import { Cards } from 'src/app/models/cards';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -21,33 +22,35 @@ export class HomeComponent implements OnInit{
   card: Cards;
 
   constructor(private utilsService: UtilsService, private router: Router,
-    private userCardsService: UsercardsService
+    private userCardsService: UsercardsService, private titleService: Title
   ){}
 
+  // Method that's executed when the component is loaded
   ngOnInit(): void {
+    this.titleService.setTitle('Home');
     this.user = this.utilsService.decryptData(localStorage.getItem('user')!);
   }
 
-  logout(){
-    localStorage.clear();
-    this.router.navigate(['/login']);
+  openMenu(){
+    this.utilsService.openModal('menuModal');
   }
 
-  buyGift(idGift: number){
-    this.userCardsService.postRandomCard(idGift, this.user).subscribe(resp =>{
+  buyBox(boxID: number){
+    this.userCardsService.postRandomCard(boxID, this.user).subscribe(resp =>{
       this.userCards = resp;
       localStorage.setItem('user', this.utilsService.encrypt(this.userCards.users));
       this.user = this.utilsService.decryptData(localStorage.getItem('user')!);
       this.card = this.userCards.cards;
-      var modal = document.getElementById('giftModal');
 
-      var modalInstance = new bootstrap.Modal(modal);
-
-      modalInstance.show();
+      this.utilsService.openModal('boxModal');
     },
     (error: HttpErrorResponse) => {
       this.utilsService.showAlert(error.error.error,"Error");
       return throwError(error.error.error);
     })
+  }
+  
+  logout(){
+    localStorage.clear();
   }
 }

@@ -10,6 +10,7 @@ import { CombatComponent } from './components/combat/combat.component';
 import { ExchangeComponent } from './components/exchange/exchange.component';
 
 const routes: Routes = [
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent, canActivate: [authGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

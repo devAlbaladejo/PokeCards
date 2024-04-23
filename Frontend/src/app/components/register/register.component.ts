@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { Users } from 'src/app/models/users';
@@ -18,10 +19,13 @@ export class RegisterComponent implements OnInit{
   formRegister: FormGroup;
 
   constructor(private utilsService: UtilsService, private usersService: UsersService,
-    private router: Router
+    private router: Router, private titleService: Title
   ){}
 
   ngOnInit(): void {
+
+    this.titleService.setTitle('Register');
+
     this.formRegister = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]),
       email: new FormControl('', Validators.required),

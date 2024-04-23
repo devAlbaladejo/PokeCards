@@ -12,6 +12,7 @@ import { ExchangesService } from 'src/app/services/exchanges.service';
 import { UsercardsService } from 'src/app/services/usercards.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import * as bootstrap from 'bootstrap';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-exchange',
@@ -34,10 +35,12 @@ export class ExchangeComponent implements OnInit{
   removing = false;
 
   constructor(private exchangeOffersService: ExchangeoffersService, private userCardsService: UsercardsService,
-    private utilsService: UtilsService, private cardsService: CardsService, private exchangesService: ExchangesService
+    private utilsService: UtilsService, private cardsService: CardsService, private exchangesService: ExchangesService,
+    private titleService: Title
   ){}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Exchange');
     this.listExchangeOffers();
     this.listUserCards();
     this.listCards();

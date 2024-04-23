@@ -54,9 +54,9 @@ public class UserCardsRestController {
 		return userCards;
 	}
 	
-	@PostMapping("/userCards/save/{giftID}")
+	@PostMapping("/userCards/save/{boxID}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> createUserCard(@PathVariable Long giftID, @Valid @RequestBody Users user, BindingResult result) {
+	public ResponseEntity<?> createUserCard(@PathVariable Long boxID, @Valid @RequestBody Users user, BindingResult result) {
 
 		Map<String, Object> response = new HashMap<>();
 		Map<Integer, Integer[]> probabilities = new HashMap<>();
@@ -76,8 +76,8 @@ public class UserCardsRestController {
 		
 		try {		
 			List<Cards> cards =  cardsService.findAll();
-			if(Utils.userHasPoints(user,giftID.intValue())) {
-				Cards card = Utils.getRandomCard(probabilities.get(giftID.intValue()), cards);
+			if(Utils.userHasPoints(user,boxID.intValue())) {
+				Cards card = Utils.getRandomCard(probabilities.get(boxID.intValue()), cards);
 				Usercards usercards = userCardsService.findByUserIdAndCardId(user.getId(), card.getId());
 				
 				if(usercards == null) {
@@ -93,11 +93,11 @@ public class UserCardsRestController {
 				
 				int points = 0;
 				
-				if(giftID == 1)
+				if(boxID == 1)
 					points = 100;
-				else if(giftID == 2)
+				else if(boxID == 2)
 					points = 200;
-				else if(giftID == 3)
+				else if(boxID == 3)
 					points = 300;
 				
 				user.setPoints((user.getPoints()) - points);

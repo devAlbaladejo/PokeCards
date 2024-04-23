@@ -6,6 +6,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Users } from 'src/app/models/users';
 import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-combat',
@@ -24,10 +25,11 @@ export class CombatComponent implements OnInit{
   typesAndStrongID: Map<Types, number[]> = new Map(); 
 
   constructor(private typesService: TypesService, private utilsService: UtilsService,
-    private usersService: UsersService, private router: Router
+    private usersService: UsersService, private router: Router, private titleService: Title
   ) {  }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Combat');
     this.listTypes();
   }
 

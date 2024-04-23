@@ -5,14 +5,15 @@ import {
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(private router: Router) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const token = localStorage.getItem('token');
 
@@ -21,7 +22,14 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: request.headers.set('Authorization', `Bearer ${token}`)
       })
 
-      return next.handle(cloned);
+      return next.handle(cloned).pipe(
+        catchError((error: any) => {
+          if (error.status === 403) {
+            this.router.navigate(['/login']);
+          }
+          return throwError(error);
+        })
+      );
     }
     return next.handle(request);
   }

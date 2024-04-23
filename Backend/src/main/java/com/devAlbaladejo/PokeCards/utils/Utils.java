@@ -62,9 +62,9 @@ public class Utils {
 		return Double.parseDouble(resultado);
 	}
 	
-	public static boolean userHasPoints(Users user, int giftID) {
+	public static boolean userHasPoints(Users user, int boxID) {
 		
-		switch (giftID) {
+		switch (boxID) {
 			case 1: {
 				if(user.getPoints() < 100)
 					return false;
