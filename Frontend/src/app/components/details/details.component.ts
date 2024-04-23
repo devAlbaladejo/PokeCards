@@ -30,9 +30,11 @@ export class DetailsComponent implements OnInit {
     private titleService: Title
   ) {}
 
+  // Method that's executed when the component is loaded
   ngOnInit(): void {
     this.titleService.setTitle('Pokemon Details');
     
+    // If the user does not has the card, we return it to the pokedex
     this.route.params.pipe(
       switchMap(params => {
         const cardId = +params['id'];
@@ -57,6 +59,7 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  // Check if user has the card
   checkUserHasCard(cardID: number): Observable<boolean> {
     this.user = this.utilsService.decryptData(localStorage.getItem('user')!);
     return this.userCardsService.getUserCards(this.user.id).pipe(
@@ -71,6 +74,7 @@ export class DetailsComponent implements OnInit {
     );
   }
 
+  // Paint progress bars with pokemon primary type
   progress(){
     const rgbaColor = this.rgbaFromHex(this.card.primaryType.color);
     const style = document.createElement("style");
@@ -87,6 +91,7 @@ export class DetailsComponent implements OnInit {
   document.head.appendChild(style);
   }
 
+  // Convert color hexadecimal to rgba
   rgbaFromHex(hexColor: string) {
     return [
       parseInt(hexColor.slice(1, 3), 16),

@@ -24,24 +24,24 @@ header {
     color: white;
 }
 
-body .title {
+.title {
     display: flex;
     align-items: center;
     justify-content: space-between;
     column-gap: 15px;
 }
 
-body .title-container{
+.title-container{
     display: flex;
     align-items: center;
     column-gap: 8px;
 }
 
-header .title .title-container .back{ max-height: 32px; }
+.back{ max-height: 32px; }
 
-header .title .title-container .pokemon-name h1{ text-transform: capitalize; }
+.pokemon-name h1{ text-transform: capitalize; }
 
-body .pokemon-id p{ font-weight: 700; }
+.pokemon-id p{ font-weight: 700; }
 
 .featured-img{ position: relative; }
 
@@ -194,4 +194,3 @@ body .pokemon-id p{ font-weight: 700; }
     border-radius: 4px;
     height: 10px;
 }
-
