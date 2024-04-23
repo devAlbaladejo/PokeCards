@@ -37,21 +37,13 @@ body .title-container{
     column-gap: 8px;
 }
 
-header .title .title-container .back{
-    max-height: 32px;
-}
+header .title .title-container .back{ max-height: 32px; }
 
-header .title .title-container .pokemon-name h1{
-    text-transform: capitalize;
-}
+header .title .title-container .pokemon-name h1{ text-transform: capitalize; }
 
-body .pokemon-id p{
-    font-weight: 700;
-}
+body .pokemon-id p{ font-weight: 700; }
 
-.featured-img{
-    position: relative;
-}
+.featured-img{ position: relative; }
 
 .featured-img .pokemon-img{
     width: 200px;
@@ -80,8 +72,7 @@ body .pokemon-id p{
     height: calc(100% - 18rem);
 }
 
-.pokemon-info > div{
-    margin: 0.5rem 0;
+.pokemon-info > div{ margin: 0.5rem 0;
 }
 
 .pokemon-info .pokemon-types{
@@ -173,9 +164,7 @@ body .pokemon-id p{
 
 .first::before{ content: "I"; }
 
-.pokemon-stats{
-    height: 100%;
-}
+.pokemon-stats{ height: 100%; }
 
 .stat-container{
     display: flex;

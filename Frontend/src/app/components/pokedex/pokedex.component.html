@@ -7,13 +7,26 @@
   </head>
   <body>
     <header>
-      <div class="logo">
-        <a href="/home"><img src="./../../../assets/imgs/back-to-home.svg" alt="back"></a>
-        <img src="./../../../assets/imgs/pokeball.svg" alt="pokeball" />
-        <h1>Pokedex</h1>
-      </div>
-      <div class="pokemon-counter">
-        <h1>{{userCards.length}}/{{cards.length}}</h1>
+      <div class="header-container">
+        <div class="header-title">
+          <div class="header-logo">
+            <a href="/home"><img src="./../../../assets/imgs/back-to-home.svg" alt="back"></a>
+            <img src="./../../../assets/imgs/pokeball.svg" alt="pokeball" />
+            <h1>Pokedex</h1>
+          </div>
+          <div>
+            <h1>{{userCards.length}}/{{allCards.length}}</h1>
+          </div>
+        </div>
+        <div class="header-search">
+          <div class="search">
+            <img src="./../../../assets/imgs/search.svg" alt="search icon" class="search-icon">
+            <input type="text" class="search-input" placeholder="Search" id="search-input" (keyup)="filterPokemons($event)">
+          </div>
+          <div class="search-close">
+            <img src="./../../../assets/imgs/cross.svg" alt="cross icon" class="search-close-icon" id="search-close-icon" (click)="clearSearch()">
+          </div>
+        </div>
       </div>
     </header>
     <main class="list-wrapper">
@@ -38,6 +51,7 @@
             </ng-template>
           </div>
         </div>
+        <div *ngIf="cards.length == 0" class="not-found-message">Pokemon not found</div>
     </main>
   </body>
 </html>
