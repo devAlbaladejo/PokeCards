@@ -24,7 +24,9 @@ export class ExchangeComponent implements OnInit{
   exchangeOffers: ExchangeOffers[];
   exchangeOffer: ExchangeOffers = new ExchangeOffers();
   userCards: UserCards[];
-  cards: Cards[];
+  filterUserCards: UserCards[];
+  allCards: Cards[];
+  filterAllCards: Cards[];
   cardOffer?: Cards;
   cardsDesire: Cards[] = [];
   cardDemand?: Cards;
@@ -41,9 +43,13 @@ export class ExchangeComponent implements OnInit{
 
   ngOnInit(): void {
     this.titleService.setTitle('Exchange');
-    this.listExchangeOffers();
+    this.loadExchanges();
     this.listUserCards();
     this.listCards();
+  }
+
+  loadExchanges(){
+    this.listExchangeOffers();
     this.listExchanges();
   }
 
@@ -61,6 +67,7 @@ export class ExchangeComponent implements OnInit{
     this.userCardsService.getUserCards(this.user.id).subscribe(resp => {
       if(resp){
         this.userCards = resp;
+        this.filterUserCards = resp; 
       }
     })
   }
@@ -68,7 +75,8 @@ export class ExchangeComponent implements OnInit{
   listCards(){
     this.cardsService.getCards().subscribe(resp => {
       if(resp){
-        this.cards = resp;
+        this.allCards = resp;
+        this.filterAllCards = resp;
       }
     });
   }
@@ -83,10 +91,10 @@ export class ExchangeComponent implements OnInit{
 
   newExchangeOffer(){
     if(this.userCards.length == 0)
-      this.utilsService.showAlert('','');
+      this.showMessage('You don\'t have cards','Error');
     else{
       this.enableCards('desire-list');
-      this.showModal('exchangeOfferModal');
+      this.utilsService.openModal('exchangeOfferModal');
     }
   }
 
@@ -100,11 +108,23 @@ export class ExchangeComponent implements OnInit{
 
     this.exchangeOffersService.createExchangeOffer(this.exchangeOffer).subscribe(resp => {
       if(resp){
-        window.location.reload();
+        this.loadExchanges();
+        this.showMessage('Exchange offer created');
       }
     });
   }
 
+  deletedExchangeOffer(exchangeOffers: ExchangeOffers){
+    this.exchangeOffer = exchangeOffers;
+    this.exchangeOffersService.deleteExchangeOffer(this.exchangeOffer.id).subscribe(resp => {
+      if(resp){
+        this.showMessage('Exchange offer deleted');
+        this.loadExchanges();
+      }
+    })
+  }
+
+  // shows the number of cards you have 
   checkAmount(cardID: number) : string{
     const userCard = this.userCards.find(e => e.cards.id === cardID);
     if (userCard){
@@ -213,16 +233,6 @@ export class ExchangeComponent implements OnInit{
     this.removing = true;
   }
 
-  removeExchangeOffer(exchangeOffers: ExchangeOffers){
-    this.exchangeOffer = exchangeOffers;
-    this.exchangeOffersService.deleteExchangeOffer(this.exchangeOffer.id).subscribe(resp => {
-      if(resp){
-        this.utilsService.showAlert('Exchange offer removed','');
-        this.reload();
-      }
-    })
-  }
-
   checkUserHasDemandCards(exchangeOffer: ExchangeOffers) : boolean{
     return this.userCards.some(e => {
       return e.cards.id === exchangeOffer.desiredCard1.id 
@@ -234,10 +244,10 @@ export class ExchangeComponent implements OnInit{
   getDataExchange(exchangeOffers: ExchangeOffers){
     if(this.checkUserHasDemandCards(exchangeOffers)){
       this.exchange.exchangeOffer = exchangeOffers;
-      this.showModal('exchangeModal');
+      this.utilsService.openModal('exchangeModal');
     }
     else
-      this.utilsService.showAlert('You don\'t have any cards that the user wants','Error');
+      this.showMessage('You don\'t have any cards that the user wants','Error');
   }
 
   change(){
@@ -246,28 +256,62 @@ export class ExchangeComponent implements OnInit{
 
     this.exchangesService.createExchange(this.exchange).subscribe(resp => {
       if(resp){
-        this.utilsService.showAlert('Exchange has been made!','');
-        this.reload();
+        this.showMessage('Exchange has been made');
+        this.loadExchanges();
       }
     },
     (error: HttpErrorResponse) => {
       console.log(error.error.error);
-      this.utilsService.showAlert(error.error.error,"Error");
+      this.showMessage(error.error.error,"Error");
       return throwError(error.error.error);
     })
   }
 
-  showModal(modalID: string){
-    var modal = document.getElementById(modalID);
+  filterOfferPokemons(event: KeyboardEvent) {
+    const searchTerm = (event.target as HTMLInputElement).value;
 
-    var modalInstance = new bootstrap.Modal(modal);
-
-    modalInstance.show();
+    if (!searchTerm.trim()) {
+      // If value is empty, show pokemons that user has
+      this.filterUserCards = this.userCards;
+    } else {
+      // Filter pokemon for search value
+      this.filterUserCards = this.userCards.filter(card =>
+        card.cards.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+      );
+    }
   }
 
-  reload(){
+  filterDesirePokemons(event: KeyboardEvent) {
+    const searchTerm = (event.target as HTMLInputElement).value;
+
+    if (!searchTerm.trim()) {
+      // If value is empty, show all pokemons
+      this.filterAllCards = this.allCards;
+    } else {
+      // Filter pokemon for search value
+      this.filterAllCards = this.allCards.filter(card =>
+        card.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+      );
+    }
+  }
+
+  // check if the desired card is selected
+  isSelectedCard(card: any): boolean {
+    return this.cardsDesire.some(e => e.id == card.id);
+  }
+
+  // Set class if card is available or not
+  setClass(card: any) {
+    const isSelected = this.isSelectedCard(card);
+    return {
+        'selected': isSelected,
+        'disabled': !isSelected && this.cardsDesire.length === 3
+    };
+  }
+
+  showMessage(message: string, action: string = ''){
     setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+      this.utilsService.showAlert(message, action);
+    }, 300);
   }
 }

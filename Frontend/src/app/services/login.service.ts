@@ -13,6 +13,7 @@ export class LoginService {
 
   constructor(private http: HttpClient, private utilsService: UtilsService, private usersService: UsersService) { }
 
+  // Check the credentials and if they are valid add the token and the user to LocalStorage
   login(creds: Credentials){
     return this.http.post("http://localhost:8080/login", creds, {
       observe: 'response'

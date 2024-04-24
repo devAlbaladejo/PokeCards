@@ -5,14 +5,69 @@
   font-family: 'Arial', sans-serif;
 }
 
-button{
-  padding: 10px;
+body{ 
+  background-color: #cc322a;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button{ padding: 5px; }
+
+header{
+  width: calc(100% - 1rem);
+  margin-top: 0.7rem;
+  background-color: #212121;
+  color: white;
+  border-radius: 5px;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  width: 100%;
+  gap: 5px;
+}
+
+.header-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.header-title{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exchanges-wrapper, 
+.offer-container,
+.desire-container{
+  background-color: white;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
+  border-radius: 0.75rem;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.exchanges-wrapper{
+  min-height: calc(90% - 1.5rem);
+  width: calc(100% - 1rem);
 }
 
 .exchange-container{
     display: flex;
     flex-direction: column;
-    background-color: lightcoral;
     border-radius: 5px;
     margin: 10px 0px;
     padding: 10px;
@@ -32,6 +87,10 @@ button{
   gap: 10px
 }
 
+.exchange-container.own { background-color: lightgreen; }
+
+.exchange-container.other { background-color: lightblue; }
+
 .exchange img{
   width: 72px;
   height: 72px;
@@ -46,9 +105,7 @@ button{
     text-decoration: none;
 }
 
-.pokemon-card .pokemon-rarity{
-    border-radius: 5px;
-}
+.pokemon-card .pokemon-rarity{ border-radius: 5px; }
 
 .pokemon-card .pokemon-info{
   min-height: 16px;
@@ -61,9 +118,7 @@ button{
   line-height: 12px;
 }
 
-.pokemon-card .pokemon-info p:first-child{
-  text-transform: capitalize;
-}
+.pokemon-card .pokemon-info p:first-child{ text-transform: capitalize; }
 
 .pokemon-card .pokemon-img {
   width: 72px;
@@ -94,29 +149,71 @@ button{
   margin-top: -27px;
 }
 
-.pokemon-remove{
-  display: none;
-}
+.pokemon-remove{ display: none; }
 
-.pokemon-card .pokemon-obtain p{
-  font-size: 10px;
-}
+.pokemon-card .pokemon-obtain p{ font-size: 10px; }
 
-:not(.pokemon-list) .pokemon-card.disabled {
-  opacity: 0.5;
-}
+.pokemon-card.disabled { opacity: 0.5; }
+
+/* Modal */
 
 .modal-fullscreen {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  max-width: none;
 }
 
-.modal-fullscreen .modal-dialog {
+.modal-content{
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.modal-header{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.modal-body-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-search{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.25) inset;
+  height: 32px;
+  padding: 0 10px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 24px);
+}
+
+.search input {
   width: 100%;
-  height: 100%;
-  margin: 0;
+  border: none;
+  margin-left: 8px;
+  font-size: 18px;
+}
+
+.search input:focus-visible { outline: 0; }
+
+.not-found-message {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 600;
+  font-size: 18px;
+  color: black;
 }
 
 .pokemon-list {
@@ -128,18 +225,28 @@ button{
   gap: 0.75rem;
 }
 
-.pokemon-list .pokemon-card{
-  cursor: pointer;
+.offer-container,
+.desire-container {
+  min-height: calc(100% - 28rem);
+  position: relative;
 }
 
-.selected, .selected .pokemon-obtain{
-  background-color: #ADD8E6;
-}
-
-.selected .pokemon-remove{
-  display: block;
-}
-
-.selected .pokemon-remove button{
+.modal-exchange{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   width: 100%;
 }
+
+.pokemon-list .pokemon-card{ cursor: pointer; }
+
+.selected, .selected .pokemon-obtain{ background-color: #ADD8E6; }
+
+.selected .pokemon-remove{ display: block; }
+
+.selected .pokemon-remove button{ width: 100%; }
+
+.modal-footer, .modal-footer button{ width: 100%; }
+
