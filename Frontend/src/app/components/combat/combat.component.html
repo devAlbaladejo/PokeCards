@@ -35,42 +35,65 @@
             </section>
         </main>
 
-        <div id="info-screen" class="info">
-            <h1>Info:</h1>
-            <h2 class="text-center">The game is like rock, paper, scissors, but with the type table.</h2>
-            <h3>The first one to get 3 points wins</h3>
-            <div class="options">
-                <button type="button" class="btn btn-primary" (click)="home()">Back Home</button>
-                <button type="button" class="btn btn-success" (click)="play()">Play</button>
-            </div>
-        </div>
-
-        <div id="end-screen" class="end-game">
-            <h1>What do you want yo do?</h1>
-            <div class="options">
-                <button type="button" class="btn btn-primary" (click)="home()">Back Home</button>
-                <button type="button" class="btn btn-success" (click)="play()">Play Again</button>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="typesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Choose one type:</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="card-container">
-                        <div *ngFor="let type of types">
-                            <div [ngStyle]="{'background-color': (type.color)}" class="card" data-bs-dismiss="modal" (click)="userSelectedType(type)">
-                                <p>{{type.name}}</p>
+        <!-- Info Modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Info</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-container">
+                            <h2 class="text-center">The game is like rock, paper, scissors, but with the type table.</h2>
+                            <h3>The first one to get 1 point wins</h3>
+                            <div class="options">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="home()">Back Home</button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="play()">Play</button>
                             </div>
-                          </div>
-                      </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- End Modal -->
+        <div class="modal fade" id="endModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">End game</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-container">
+                            <h1>What do you want yo do?</h1>
+                            <div class="options">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="home()">Back Home</button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="play()">Play Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Types Modal -->
+        <div class="modal fade" id="typesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-fullscreen" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose one type</h5>
+              </div>
+              <div class="modal-body">
+                  <div class="card-container">
+                      <div *ngFor="let type of types">
+                          <div [ngStyle]="{'background-color': (type.color)}" class="card" data-bs-dismiss="modal" (click)="userSelectedType(type)">
+                              <p>{{type.name}}</p>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
           </div>
+        </div>
     </body>
 </html>

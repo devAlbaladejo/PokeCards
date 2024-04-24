@@ -36,4 +36,12 @@ export class UtilsService {
 
     modalInstance.show();
   }
+
+  closeModal(modalID: string){
+    var modal = document.getElementById(modalID);
+
+    var modalInstance = new bootstrap.Modal(modal);
+
+    modalInstance.hide();
+  }
 }

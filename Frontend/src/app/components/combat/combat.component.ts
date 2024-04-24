@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Types } from 'src/app/models/types';
 import { TypesService } from 'src/app/services/types.service';
-import * as bootstrap from 'bootstrap';
 import { UtilsService } from 'src/app/services/utils.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Users } from 'src/app/models/users';
@@ -30,6 +29,7 @@ export class CombatComponent implements OnInit{
 
   ngOnInit(): void {
     this.titleService.setTitle('Combat');
+    this.utilsService.openModal('infoModal')
     this.listTypes();
   }
 
@@ -42,6 +42,7 @@ export class CombatComponent implements OnInit{
     })
   }
 
+  // Adds all types to which each type is strong
   addTypesAndStrong(){
     this.types.forEach(e => {
       if (e && e.strong) { 
@@ -53,51 +54,52 @@ export class CombatComponent implements OnInit{
     });
   }
 
+  // Start game
   play(){
-
     this.userPoints = 0;
     this.cpuPoints = 0;
 
-    let divEnd = document.getElementById('end-screen');
-    if (divEnd) {
-      divEnd.style.zIndex = '-2';
-    }
+    this.utilsService.closeModal('infoModal');
 
-    let divInfo = document.getElementById('info-screen');
-    if (divInfo) {
-      divInfo.style.zIndex = '-1';
-      this.showModal();
-    }
+    this.showTypes();
   }
 
-  showModal(){
+  showTypes(){
     setTimeout(() => {
-      var modal = document.getElementById('typesModal');
-
-      var modalInstance = new bootstrap.Modal(modal);
-
-      modalInstance.show();
+      this.utilsService.openModal('typesModal');
     }, 1000);
   }
 
   userSelectedType(type: Types){
-    this.userType = type;
-    this.createCard('user', this.userType);
-
-    setTimeout(() => {
-      this.cpuSelectType();
-    }, 1000);
+    this.selectType('user', type);
   }
 
   cpuSelectType(){
-    let number = this.randomNumber(this.types.length);
-    this.cpuType = this.types[number - 1];
-    this.createCard('cpu', this.cpuType);
-    this.checkSelections();
+    const number = this.randomNumber(this.types.length);
+    const type = this.types[number - 1];
+    this.selectType('cpu', type);
   }
 
   randomNumber(max: number) : number{
     return Math.floor(Math.random() * max) + 1;
+  }
+
+  selectType(player: string, type: Types){
+    if (player === 'user') {
+      this.userType = type;
+    } else if (player === 'cpu') {
+      this.cpuType = type;
+    }
+  
+    this.createCard(player, type);
+  
+    if (player === 'user') {
+      setTimeout(() => {
+        this.cpuSelectType();
+      }, 1000);
+    } else {
+      this.checkSelections();
+    }
   }
 
   createCard(player: string, type: Types){
@@ -119,6 +121,7 @@ export class CombatComponent implements OnInit{
     cpuCard?.remove();
   }
 
+  // Check if user or CPU get a point
   checkSelections(){
     let userScore = false;
     let cpuScore = false;
@@ -154,17 +157,27 @@ export class CombatComponent implements OnInit{
 
       this.removeCards();
 
-      if(this.userPoints == 3){
-        this.utilsService.showAlert('User Win!','');
+      if(this.userPoints == 1 && this.cpuPoints == 0){
+        this.utilsService.showAlert('User Win! You have earned 10 points','');
         this.addUserPoints();
-        this.showEndScreen();
+        setTimeout(() => {
+          this.showEndGame();
+        }, 3000);
       }
-      else if(this.cpuPoints == 3){
+      else if(this.cpuPoints == 1 && this.userPoints == 0){
         this.utilsService.showAlert('CPU Win!','');
-        this.showEndScreen();
+        setTimeout(() => {
+          this.showEndGame();
+        }, 3000);
+      }
+      else if(this.userPoints == 1 && this.cpuPoints == 1){
+        this.utilsService.showAlert('Draw! Nobody wins','');
+        setTimeout(() => {
+          this.showEndGame();
+        }, 3000);
       }
       else
-        this.showModal();
+        this.showTypes();
     }, 3000);
   }
 
@@ -178,11 +191,8 @@ export class CombatComponent implements OnInit{
     });
   }
 
-  showEndScreen(){
-    let divEnd = document.getElementById('end-screen');
-    if (divEnd) {
-      divEnd.style.zIndex = '2';
-    }
+  showEndGame(){
+    this.utilsService.openModal('endModal');
   }
 
   home(){

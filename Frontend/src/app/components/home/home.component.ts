@@ -6,7 +6,6 @@ import { UserCards } from 'src/app/models/user-cards';
 import { Users } from 'src/app/models/users';
 import { UsercardsService } from 'src/app/services/usercards.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import * as bootstrap from 'bootstrap';
 import { Cards } from 'src/app/models/cards';
 import { Title } from '@angular/platform-browser';
 
