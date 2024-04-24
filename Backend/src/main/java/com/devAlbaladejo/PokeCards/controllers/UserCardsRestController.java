@@ -1,6 +1,5 @@
 package com.devAlbaladejo.PokeCards.controllers;
 
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,6 +58,7 @@ public class UserCardsRestController {
 	public ResponseEntity<?> createUserCard(@PathVariable Long boxID, @Valid @RequestBody Users user, BindingResult result) {
 
 		Map<String, Object> response = new HashMap<>();
+		// Probabilities of each box
 		Map<Integer, Integer[]> probabilities = new HashMap<>();
 		probabilities.put(1, new Integer[] {44,74,92,99,100});
 		probabilities.put(2, new Integer[] {30,62,85,97,100});

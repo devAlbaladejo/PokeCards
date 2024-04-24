@@ -58,6 +58,8 @@ public class ExchangeOffersRestController {
 		}
 		
 		try {
+			
+			//Delete the letter from the offering user.
 			Usercards usercards = userCardsService.findByUserIdAndCardId(exchangeOffers.getUserOffer().getId(), exchangeOffers.getCardOffer().getId());
 			
 			usercards.setAmount((usercards.getAmount() - 1));
@@ -91,6 +93,7 @@ public class ExchangeOffersRestController {
 		try {
 			Usercards usercards = userCardsService.findByUserIdAndCardId(exchangeOffers.getUserOffer().getId(), exchangeOffers.getCardOffer().getId());
 			
+			//Add the letter from the bidding user.
 			if(usercards == null) {
 				usercards = new Usercards();
 				usercards.setUsers(exchangeOffers.getUserOffer());
