@@ -14,7 +14,7 @@ CREATE TABLE Types(
 	id integer DEFAULT nextval('seq_types'::regclass) NOT NULL,
 	name character varying NOT NULL,
 	color character varying NOT NULL,
-	strong character varying NOT NULL,
+	strong character varying,
 	CONSTRAINT pk_types PRIMARY KEY(id)
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE Cards(
 	CONSTRAINT fk_primary_type_types FOREIGN KEY (primary_type) REFERENCES Types(id),
 	CONSTRAINT fk_secondary_type_types FOREIGN KEY (secondary_type) REFERENCES Types(id),
 	CONSTRAINT fk_rarity_rarities FOREIGN KEY (rarity) REFERENCES Rarities(id)
-)
+);
 
 -- Users
 CREATE SEQUENCE seq_users
@@ -112,7 +112,7 @@ CREATE TABLE UserCards(
 	CONSTRAINT pk_usercards PRIMARY KEY(user_id, card_id),
 	CONSTRAINT fk_usercards_users FOREIGN KEY(user_id) REFERENCES Users(id),
 	CONSTRAINT fk_usercards_cards FOREIGN KEY(card_id) REFERENCES Cards(id)
-)
+);
 
 -- Exchange Offers
 CREATE SEQUENCE public.seq_exchange_offers

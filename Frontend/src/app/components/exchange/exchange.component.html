@@ -153,7 +153,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1>New Exchange Offer</h1>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">X</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="resetVariables()">X</button>
                 </div>
                 <div class="modal-body px-3">
                   <div class="modal-body-title py-3">
@@ -161,7 +161,7 @@
                     <div class="header-search">
                       <div class="search">
                         <img src="./../../../assets/imgs/search.svg" alt="search icon" class="search-icon">
-                        <input type="text" class="search-input" placeholder="Search" id="search-input" (keyup)="filterOfferPokemons($event)">
+                        <input type="text" class="search-input" placeholder="Search" id="search-input" value="{{searchPokemonOffer}}" (keyup)="filterOfferPokemons($event)">
                       </div>
                     </div>
                   </div>
@@ -192,7 +192,7 @@
                     <div class="header-search">
                       <div class="search">
                         <img src="./../../../assets/imgs/search.svg" alt="search icon" class="search-icon">
-                        <input type="text" class="search-input" placeholder="Search" id="search-input" (keyup)="filterDesirePokemons($event)">
+                        <input type="text" class="search-input" placeholder="Search" id="search-input" value="{{searchPokemonDemand}}" (keyup)="filterDesirePokemons($event)">
                       </div>
                     </div>
                   </div>
@@ -232,7 +232,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h1>Exchange</h1>
-                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">X</button>
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal" (click)="resetVariables()">X</button>
                 </div>
                 <div *ngIf="exchange.exchangeOffer != null" class="modal-body modal-exchange">
                   <h3>Pokemon Offer</h3>
@@ -255,7 +255,7 @@
                   <h3>Pokemon Demand</h3>
                   <div id="demand-list" class="pokemon-list">
                     <!-- Desire Card 1 -->
-                    <div class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard1.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard1)">
+                    <div class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard1.id)" [ngClass]="{'selected': exchange.exchangeOffer.desiredCard1.id == cardDemand?.id, 'disabled': cardDemand && exchange.exchangeOffer.desiredCard1.id != cardDemand.id}" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard1)">
                       <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard1.rarities.color)}" class="pokemon-rarity">
                         <div class="pokemon-info">
                           <p>{{exchange.exchangeOffer.desiredCard1.name}}</p>
@@ -273,7 +273,7 @@
                       </div>
                     </div>
                     <!-- Desire Card 2 -->
-                    <div *ngIf="exchange.exchangeOffer.desiredCard2 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard2.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard2)">
+                    <div *ngIf="exchange.exchangeOffer.desiredCard2 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard2.id)" [ngClass]="{'selected': exchange.exchangeOffer.desiredCard2.id == cardDemand?.id, 'disabled': cardDemand && exchange.exchangeOffer.desiredCard2.id != cardDemand.id}" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard2)">
                       <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard2.rarities.color)}" class="pokemon-rarity">
                         <div class="pokemon-info">
                           <p>{{exchange.exchangeOffer.desiredCard2.name}}</p>
@@ -291,7 +291,7 @@
                       </div>
                     </div>
                     <!-- Desire Card 3 -->
-                    <div *ngIf="exchange.exchangeOffer.desiredCard3 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard3.id)" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard3)">
+                    <div *ngIf="exchange.exchangeOffer.desiredCard3 != null" class="pokemon-card" [ngClass]="checkAmount(exchange.exchangeOffer.desiredCard3.id)" [ngClass]="{'selected': exchange.exchangeOffer.desiredCard3.id == cardDemand?.id, 'disabled': cardDemand && exchange.exchangeOffer.desiredCard3.id != cardDemand.id}" (click)="addCardDemand($event, exchange.exchangeOffer.desiredCard3)">
                       <div [ngStyle]="{'border': '5px solid ' + (exchange.exchangeOffer.desiredCard3.rarities.color)}" class="pokemon-rarity">
                         <div class="pokemon-info">
                           <p>{{exchange.exchangeOffer.desiredCard3.name}}</p>

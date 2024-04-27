@@ -11,7 +11,6 @@ import { ExchangeoffersService } from 'src/app/services/exchangeoffers.service';
 import { ExchangesService } from 'src/app/services/exchanges.service';
 import { UsercardsService } from 'src/app/services/usercards.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import * as bootstrap from 'bootstrap';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -35,6 +34,8 @@ export class ExchangeComponent implements OnInit{
   user: Users;
   amount = 0;
   removing = false;
+  searchPokemonOffer = '';
+  searchPokemonDemand = '';
 
   constructor(private exchangeOffersService: ExchangeoffersService, private userCardsService: UsercardsService,
     private utilsService: UtilsService, private cardsService: CardsService, private exchangesService: ExchangesService,
@@ -43,14 +44,26 @@ export class ExchangeComponent implements OnInit{
 
   ngOnInit(): void {
     this.titleService.setTitle('Exchange');
-    this.loadExchanges();
-    this.listUserCards();
-    this.listCards();
+    this.loadData();
+    
   }
 
-  loadExchanges(){
+  loadData(){
     this.listExchangeOffers();
     this.listExchanges();
+    this.listUserCards();
+    this.listCards();
+    this.resetVariables();
+  }
+
+  resetVariables(){
+    this.cardOffer = undefined;
+    this.cardsDesire = [];
+    this.cardDemand = undefined;
+    this.searchPokemonOffer = '';
+    this.searchPokemonDemand = '';
+    this.filterUserCards = this.userCards;
+    this.filterAllCards = this.allCards;
   }
 
   listExchangeOffers(){
@@ -108,7 +121,7 @@ export class ExchangeComponent implements OnInit{
 
     this.exchangeOffersService.createExchangeOffer(this.exchangeOffer).subscribe(resp => {
       if(resp){
-        this.loadExchanges();
+        this.loadData();
         this.showMessage('Exchange offer created');
       }
     });
@@ -119,7 +132,7 @@ export class ExchangeComponent implements OnInit{
     this.exchangeOffersService.deleteExchangeOffer(this.exchangeOffer.id).subscribe(resp => {
       if(resp){
         this.showMessage('Exchange offer deleted');
-        this.loadExchanges();
+        this.loadData();
       }
     })
   }
@@ -257,7 +270,7 @@ export class ExchangeComponent implements OnInit{
     this.exchangesService.createExchange(this.exchange).subscribe(resp => {
       if(resp){
         this.showMessage('Exchange has been made');
-        this.loadExchanges();
+        this.loadData();
       }
     },
     (error: HttpErrorResponse) => {
@@ -268,29 +281,29 @@ export class ExchangeComponent implements OnInit{
   }
 
   filterOfferPokemons(event: KeyboardEvent) {
-    const searchTerm = (event.target as HTMLInputElement).value;
+    this.searchPokemonOffer = (event.target as HTMLInputElement).value;
 
-    if (!searchTerm.trim()) {
+    if (!this.searchPokemonOffer.trim()) {
       // If value is empty, show pokemons that user has
       this.filterUserCards = this.userCards;
     } else {
       // Filter pokemon for search value
       this.filterUserCards = this.userCards.filter(card =>
-        card.cards.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+        card.cards.name.toLowerCase().includes(this.searchPokemonOffer.toLowerCase().trim())
       );
     }
   }
 
   filterDesirePokemons(event: KeyboardEvent) {
-    const searchTerm = (event.target as HTMLInputElement).value;
+    this.searchPokemonDemand = (event.target as HTMLInputElement).value;
 
-    if (!searchTerm.trim()) {
+    if (!this.searchPokemonDemand.trim()) {
       // If value is empty, show all pokemons
       this.filterAllCards = this.allCards;
     } else {
       // Filter pokemon for search value
       this.filterAllCards = this.allCards.filter(card =>
-        card.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+        card.name.toLowerCase().includes(this.searchPokemonDemand.toLowerCase().trim())
       );
     }
   }
